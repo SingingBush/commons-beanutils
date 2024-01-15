@@ -114,8 +114,8 @@ public class SqlTimeConverterTestCase extends AbstractDateConverterTest<Time> {
 
         // Valid String --> Type Conversion
         final String testString = "3:06 pm";
-        final Object expected = toType(testString, pattern, null);
-        validConversion(converter, expected, testString);
+        final Object expectedUs = toType(testString, pattern, Locale.US);
+        validConversion(converter, expectedUs, testString);
 
         // Invalid Conversions
         invalidConversion(converter, null);
@@ -128,7 +128,8 @@ public class SqlTimeConverterTestCase extends AbstractDateConverterTest<Time> {
         // Test specified Locale
         converter.setLocale(Locale.UK);
         invalidConversion(converter, testString); // Test previous value now fails
-        validConversion(converter, expected, "15:06"); // UK Short style is "HH:mm"
+        final Object expectedUk = toType(testString, pattern, Locale.US);
+        validConversion(converter, expectedUk, "15:06"); // UK Short style is "HH:mm"
 
         // Restore the default Locale
         Locale.setDefault(defaultLocale);
